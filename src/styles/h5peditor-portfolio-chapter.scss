@@ -39,16 +39,6 @@
             }
           }
 
-          &> ul > li > .field-name-content > .content > .field.library {
-            &> select {
-              display: none;
-            }
-
-            &> .h5peditor-copypaste-wrap {
-              margin-bottom: .5em;
-            }
-          }
-
           &> .h5peditor-button.h5peditor-button-textual {
             background: $base-color;
 
