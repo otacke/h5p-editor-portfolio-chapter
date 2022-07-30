@@ -1,0 +1,53 @@
+@import './h5peditor-portfolio-chapter-main.scss';
+
+.h5peditor-portfolio-chapter {
+  .field-name-chapter {
+    &> .title {
+      display: none;
+    }
+
+    &> .content {
+      background: inherit;
+      border: 0;
+      padding: 0;
+
+      &> .field.list {
+        &> .h5peditor-label {
+          display: none
+        }
+
+        .h5peditor-widget-wrapper {
+          .list-item-title-bar {
+            background: $base-color;
+
+            .list-actions .order-group {
+              background: $base-color;
+
+              &> .h5peditor-button {
+                &::after {
+                  opacity: .7;
+                }
+
+                &:hover {
+                  background: inherit;
+
+                  &::after {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+
+          &> .h5peditor-button.h5peditor-button-textual {
+            background: $base-color;
+
+            &:hover {
+              background: $base-color-90;
+            }
+          }
+        }
+      }
+    }
+  }
+}
