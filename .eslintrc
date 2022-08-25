@@ -35,9 +35,7 @@
     "no-extra-boolean-cast": "off",
     "no-console": ["error", {"allow": ["warn", "error"]}]
   },
-    "plugins": [
-    "jsdoc"
-  ],
+  "plugins": ["jsdoc"],
   "settings": {
     "jsdoc": {
       "preferredTypes": {
