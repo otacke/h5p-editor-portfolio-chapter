@@ -70,7 +70,7 @@ export default class PortfolioChapter {
    */
   handleFieldChange() {
     this.params = this.fieldInstance.params;
-    this.changes.forEach(change => {
+    this.changes.forEach((change) => {
       change(this.params);
     });
   }
