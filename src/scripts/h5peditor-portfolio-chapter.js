@@ -1,3 +1,6 @@
+import Util from './h5peditor-portfolio-chapter-util';
+import H5PLibrary from './../../library.json';
+
 /** Class for Boilerplate H5P widget */
 export default class PortfolioChapter {
 
@@ -29,6 +32,10 @@ export default class PortfolioChapter {
     this.fieldInstance = new H5PEditor.widgets[this.field.type](this.parent, this.field, this.params, this.setValue);
     this.fieldInstance.appendTo(this.$container);
 
+    // Keep track of placeholders that have been instantiated
+    this.placeholdersDone = [];
+    this.placeholdersPending = this.params?.contents?.length;
+
     // Relay changes
     if (this.fieldInstance.changes) {
       this.fieldInstance.changes.push(() => {
@@ -38,6 +45,9 @@ export default class PortfolioChapter {
 
     // Errors (or add your own)
     this.$errors = this.$container.find('.h5p-errors');
+
+    // Find main portfolio editor instance
+    this.mainEditor = Util.findParentLibrary('Portfolio', this);
   }
 
   /**
@@ -73,5 +83,30 @@ export default class PortfolioChapter {
     this.changes.forEach((change) => {
       change(this.params);
     });
+  }
+
+  /**
+   * Handle placeholder done instantiating.
+   *
+   * @param {string} id Subcontent id.
+   */
+  handlePlaceholderDone(id) {
+    if (!this.placeholdersDone.includes(id)) {
+      this.placeholdersDone.push(id);
+
+      this.placeholdersPending--;
+      if (this.placeholdersPending === 0 && this.mainEditor) {
+        this.mainEditor.handleChapterDone(this.parent.params.subContentId);
+      }
+    }
+  }
+
+  /**
+   * Get machineName.
+   *
+   * @returns {string} Machine name.
+   */
+  getMachineName() {
+    return H5PLibrary.machineName;
   }
 }
