@@ -1,7 +1,7 @@
 import Util from './h5peditor-portfolio-chapter-util';
 import H5PLibrary from './../../library.json';
 
-/** Class for Boilerplate H5P widget */
+/** Class Portfolio chapter */
 export default class PortfolioChapter {
 
   /**
