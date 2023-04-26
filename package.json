@@ -1,7 +1,7 @@
 {
   "name": "h5p-editor-portfolio-chapter",
   "version": "0.7.0",
-  "description": "Start your own H5P editor widget",
+  "description": "Editor widget for portfolio chapter",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
