@@ -1,5 +1,5 @@
-import Util from './h5peditor-portfolio-chapter-util';
-import H5PLibrary from './../../library.json';
+import Util from '@services/util';
+import H5PLibrary from '@root/library.json';
 
 /** Class Portfolio chapter */
 export default class PortfolioChapter {

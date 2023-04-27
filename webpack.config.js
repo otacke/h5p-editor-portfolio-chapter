@@ -4,9 +4,18 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const mode = process.argv.includes('--mode=production') ?
   'production' : 'development';
+const libraryName = process.env.npm_package_name;
 
 module.exports = {
   mode: mode,
+  resolve: {
+    alias: {
+      '@root': path.resolve(__dirname, '.'),
+      '@scripts': path.resolve(__dirname, 'src/scripts'),
+      '@services': path.resolve(__dirname, 'src/scripts/services'),
+      '@styles': path.resolve(__dirname, 'src/styles')
+    }
+  },
   optimization: {
     minimize: mode === 'production',
     minimizer: [
@@ -21,17 +30,18 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'h5peditor-portfolio-chapter.css'
+      filename: `${libraryName}.css`
     })
   ],
   entry: {
-    dist: './src/entries/h5peditor-portfolio-chapter.js'
+    dist: './src/entries/dist.js'
   },
   output: {
-    filename: 'h5peditor-portfolio-chapter.js',
+    filename: `${libraryName}.js`,
     path: path.resolve(__dirname, 'dist'),
     clean: true
   },
+  target: ['browserslist'],
   module: {
     rules: [
       {
@@ -69,5 +79,5 @@ module.exports = {
   stats: {
     colors: true
   },
-  devtool: (mode === 'production') ? undefined : 'eval-cheap-module-source-map'
+  ...(mode !== 'production' && { devtool: 'eval-cheap-module-source-map' })
 };
