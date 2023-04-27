@@ -52,7 +52,6 @@ export default class PortfolioChapter {
 
   /**
    * Append field to wrapper. Invoked by H5P core.
-   *
    * @param {H5P.jQuery} $wrapper Wrapper.
    */
   appendTo($wrapper) {
@@ -61,7 +60,6 @@ export default class PortfolioChapter {
 
   /**
    * Validate current values. Invoked by H5P core.
-   *
    * @returns {boolean} True, if current value is valid, else false.
    */
   validate() {
@@ -87,7 +85,6 @@ export default class PortfolioChapter {
 
   /**
    * Handle placeholder done instantiating.
-   *
    * @param {string} id Subcontent id.
    */
   handlePlaceholderDone(id) {
@@ -103,7 +100,6 @@ export default class PortfolioChapter {
 
   /**
    * Get machineName.
-   *
    * @returns {string} Machine name.
    */
   getMachineName() {

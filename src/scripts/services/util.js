@@ -2,7 +2,6 @@
 export default class Util {
   /**
    * Find parent library instance.
-   *
    * @param {string} libraryName Libary name.
    * @param {object} start Field.
    * @returns {object|null} Library instance.
