@@ -1,3 +1,4 @@
+import Dictionary from '@services/dictionary';
 import Util from '@services/util';
 import H5PLibrary from '@root/library.json';
 
@@ -16,6 +17,13 @@ export default class PortfolioChapter {
     this.field = field;
     this.params = params;
     this.setValue = setValue;
+
+    // Fill dictionary
+    Dictionary.fill({
+      l10n: {
+        chapterTitle: H5PEditor.t('H5PEditor.PortfolioChapter', 'chapterTitle')
+      }
+    });
 
     // Callbacks to call when parameters change
     this.changes = [];
@@ -48,6 +56,12 @@ export default class PortfolioChapter {
 
     // Find main portfolio editor instance
     this.mainEditor = Util.findParentLibrary('Portfolio', this);
+
+    this.parent.ready(() => {
+      this.passReadies = false;
+
+      this.overrideH5PCoreTitleField();
+    });
   }
 
   /**
@@ -71,6 +85,24 @@ export default class PortfolioChapter {
    */
   remove() {
     this.$container.remove();
+  }
+
+  /**
+   * Override H5P Core title field.
+   */
+  overrideH5PCoreTitleField() {
+    // Override H5P core title field
+    const editorContainer = this.$container.get(0)
+      .closest('.h5p-portfoliochapter-editor');
+
+    if (editorContainer) {
+      const titleField = editorContainer
+        .querySelector('.field-name-extraTitle .h5peditor-label');
+
+      if (titleField) {
+        titleField.innerHTML = Dictionary.get('l10n.chapterTitle');
+      }
+    }
   }
 
   /**
