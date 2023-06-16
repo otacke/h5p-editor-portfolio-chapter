@@ -19,7 +19,8 @@ export default class PortfolioChapter {
     this.setValue = setValue;
 
     // Fill dictionary
-    Dictionary.fill({
+    this.dictionary = new Dictionary();
+    this.dictionary.fill({
       l10n: {
         chapterTitle: H5PEditor.t('H5PEditor.PortfolioChapter', 'chapterTitle')
       }
@@ -99,7 +100,7 @@ export default class PortfolioChapter {
         .querySelector('.field-name-extraTitle .h5peditor-label');
 
       if (titleField) {
-        titleField.innerHTML = Dictionary.get('l10n.chapterTitle');
+        titleField.innerHTML = this.dictionary.get('l10n.chapterTitle');
       }
     }
   }
