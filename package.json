@@ -1,6 +1,6 @@
 {
   "name": "h5peditor-portfolio-chapter",
-  "version": "0.7.4",
+  "version": "0.8.0",
   "description": "Editor widget for portfolio chapter",
   "private": true,
   "scripts": {
