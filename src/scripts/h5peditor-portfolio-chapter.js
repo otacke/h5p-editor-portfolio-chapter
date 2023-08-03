@@ -102,6 +102,17 @@ export default class PortfolioChapter {
       if (titleField) {
         titleField.innerHTML = this.dictionary.get('l10n.chapterTitle');
       }
+
+      const titleInput = editorContainer
+        .querySelector('.field-name-extraTitle .h5peditor-text');
+
+      if (titleInput) {
+        titleInput.addEventListener('keydown', (event) => {
+          if (event.code === 'Enter') {
+            titleInput.dispatchEvent(new CustomEvent('change'));
+          }
+        });
+      }
     }
   }
 
