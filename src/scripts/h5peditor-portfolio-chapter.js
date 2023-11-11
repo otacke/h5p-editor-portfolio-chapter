@@ -59,7 +59,7 @@ export default class PortfolioChapter {
       });
     }
 
-    // Errors (or add your own). Converting back and forth just for consistency.
+    // Errors. Converting back and forth just for consistency.
     this.$errors = H5P.jQuery(
       this.$container.get(0).querySelector('.h5p-errors')
     );
@@ -84,6 +84,10 @@ export default class PortfolioChapter {
    * @param {H5P.jQuery} $wrapper Wrapper.
    */
   appendTo($wrapper) {
+    if (!($wrapper instanceof H5P.jQuery)) {
+      return; // Something went wrong completely.
+    }
+
     // Converting to JS element just for consistency.
     $wrapper.get(0).append(this.$container.get(0));
   }
