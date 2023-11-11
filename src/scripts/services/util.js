@@ -6,7 +6,7 @@ export default class Util {
    * @param {object} start Field.
    * @returns {object|null} Library instance.
    */
-  static findParentLibrary(libraryName, start) {
+  static findParentLibrary(libraryName = '', start = {}) {
     if (!start.parent) {
       return null;
     }
