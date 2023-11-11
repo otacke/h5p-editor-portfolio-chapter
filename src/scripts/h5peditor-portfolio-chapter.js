@@ -32,13 +32,20 @@ export default class PortfolioChapter {
     // Let parent handle ready callbacks of children
     this.passReadies = true;
 
-    // DOM
+    /*
+     * DOM
+     * Unfortunately, using an exposed jQuery element $container is kind of a
+     * default on H5P widgets. That's why we do it here as well instead of
+     * using a vanilla JS DOM element.
+     */
     this.$container = H5P.jQuery('<div>', {
       class: 'h5peditor-portfolio-chapter'
     });
 
     // Instantiate original field (or create your own and call setValue)
-    this.fieldInstance = new H5PEditor.widgets[this.field.type](this.parent, this.field, this.params, this.setValue);
+    this.fieldInstance = new H5PEditor.widgets[this.field.type](
+      this.parent, this.field, this.params, this.setValue
+    );
     this.fieldInstance.appendTo(this.$container);
 
     // Keep track of placeholders that have been instantiated
@@ -52,8 +59,10 @@ export default class PortfolioChapter {
       });
     }
 
-    // Errors (or add your own)
-    this.$errors = this.$container.find('.h5p-errors');
+    // Errors (or add your own). Converting back and forth just for consistency.
+    this.$errors = H5P.jQuery(
+      this.$container.get(0).querySelector('.h5p-errors')
+    );
 
     // Find main portfolio editor instance
     this.mainEditor = Util.findParentLibrary('Portfolio', this);
@@ -61,6 +70,11 @@ export default class PortfolioChapter {
     this.parent.ready(() => {
       this.passReadies = false;
 
+      /*
+       * Sole purpose of this editor widget: Replace the extra title field
+       * label "Title" that is set by H5P core with "Chapter title" to make it
+       * easier for authors to understand what this field is for.
+       */
       this.overrideH5PCoreTitleField();
     });
   }
@@ -70,7 +84,8 @@ export default class PortfolioChapter {
    * @param {H5P.jQuery} $wrapper Wrapper.
    */
   appendTo($wrapper) {
-    this.$container.appendTo($wrapper);
+    // Converting to JS element just for consistency.
+    $wrapper.get(0).append(this.$container.get(0));
   }
 
   /**
@@ -85,34 +100,37 @@ export default class PortfolioChapter {
    * Remove self. Invoked by H5P core.
    */
   remove() {
-    this.$container.remove();
+    this.$container.get(0).remove();
   }
 
   /**
    * Override H5P Core title field.
+   * Supposed to make title field clearer for authors.
    */
   overrideH5PCoreTitleField() {
     const editorContainer = this.$container.get(0)
       .closest('.h5p-portfoliochapter-editor');
 
-    if (editorContainer) {
-      const titleField = editorContainer
-        .querySelector('.field-name-extraTitle .h5peditor-label');
+    if (!editorContainer) {
+      return; // No editor container found.
+    }
 
-      if (titleField) {
-        titleField.innerHTML = this.dictionary.get('l10n.chapterTitle');
-      }
+    const titleField = editorContainer
+      .querySelector('.field-name-extraTitle .h5peditor-label');
 
-      const titleInput = editorContainer
-        .querySelector('.field-name-extraTitle .h5peditor-text');
+    if (titleField) {
+      titleField.innerHTML = this.dictionary.get('l10n.chapterTitle');
+    }
 
-      if (titleInput) {
-        titleInput.addEventListener('keydown', (event) => {
-          if (event.code === 'Enter') {
-            titleInput.dispatchEvent(new CustomEvent('change'));
-          }
-        });
-      }
+    const titleInput = editorContainer
+      .querySelector('.field-name-extraTitle .h5peditor-text');
+
+    if (titleInput) {
+      titleInput.addEventListener('keydown', (event) => {
+        if (event.code === 'Enter') {
+          titleInput.dispatchEvent(new CustomEvent('change'));
+        }
+      });
     }
   }
 
@@ -131,13 +149,15 @@ export default class PortfolioChapter {
    * @param {string} id Subcontent id.
    */
   handlePlaceholderDone(id) {
-    if (!this.placeholdersDone.includes(id)) {
-      this.placeholdersDone.push(id);
+    if (this.placeholdersDone.includes(id)) {
+      return; // Already done.
+    }
 
-      this.placeholdersPending--;
-      if (this.placeholdersPending === 0 && this.mainEditor) {
-        this.mainEditor.handleChapterDone(this.parent.params.subContentId);
-      }
+    this.placeholdersDone.push(id);
+
+    this.placeholdersPending--;
+    if (this.placeholdersPending === 0 && this.mainEditor) {
+      this.mainEditor.handleChapterDone(this.parent.params.subContentId);
     }
   }
 
