@@ -1,4 +1,4 @@
-@import "@styles/h5peditor-portfolio-chapter-main";
+@use "@styles/main";
 
 .h5peditor-portfolio-chapter {
   .field-name-chapter {
@@ -18,10 +18,10 @@
 
         .h5peditor-widget-wrapper {
           .list-item-title-bar {
-            background: $base-color;
+            background: main.$base-color;
 
             .list-actions .order-group {
-              background: $base-color;
+              background: main.$base-color;
 
               &> .h5peditor-button {
                 &::after {
@@ -40,10 +40,10 @@
           }
 
           &> .h5peditor-button.h5peditor-button-textual {
-            background: $base-color;
+            background: main.$base-color;
 
             &:hover {
-              background: $base-color-90;
+              background: main.$base-color-90;
             }
           }
         }
