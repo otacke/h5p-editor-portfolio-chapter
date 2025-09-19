@@ -22,8 +22,8 @@ export default class PortfolioChapter {
     this.dictionary = new Dictionary();
     this.dictionary.fill({
       l10n: {
-        chapterTitle: H5PEditor.t('H5PEditor.PortfolioChapter', 'chapterTitle')
-      }
+        chapterTitle: H5PEditor.t('H5PEditor.PortfolioChapter', 'chapterTitle'),
+      },
     });
 
     // Callbacks to call when parameters change
@@ -39,12 +39,12 @@ export default class PortfolioChapter {
      * using a vanilla JS DOM element.
      */
     this.$container = H5P.jQuery('<div>', {
-      class: 'h5peditor-portfolio-chapter'
+      class: 'h5peditor-portfolio-chapter',
     });
 
     // Instantiate original field (or create your own and call setValue)
     this.fieldInstance = new H5PEditor.widgets[this.field.type](
-      this.parent, this.field, this.params, this.setValue
+      this.parent, this.field, this.params, this.setValue,
     );
     this.fieldInstance.appendTo(this.$container);
 
@@ -61,7 +61,7 @@ export default class PortfolioChapter {
 
     // Errors. Converting back and forth just for consistency.
     this.$errors = H5P.jQuery(
-      this.$container.get(0).querySelector('.h5p-errors')
+      this.$container.get(0).querySelector('.h5p-errors'),
     );
 
     // Find main portfolio editor instance
